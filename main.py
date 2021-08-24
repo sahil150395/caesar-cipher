@@ -5,40 +5,26 @@ text = input("Type your message:\n").lower()
 shift = int(input("Type the shift number:\n"))
 
 
-def encrypt(input_text, shift_amount):
-    plain_text = input_text
-    iShift = shift_amount
-    cipher_text = ""
+def caesar(itext, ishift, idirection):
+    input_text = text
+    iShift = ishift
+    iDirection = idirection
+    result_text = ""
 
-    for letter in plain_text:
+    for letter in input_text:
         oldIndex = alphabet.index(letter)
-        newIndex = oldIndex + iShift
-        if newIndex > 25:
-            newIndex = newIndex - 26
-        newLetter = alphabet[newIndex]
-        cipher_text += newLetter
+        if iDirection == "encode":
+            newIndex = oldIndex + iShift
+            if newIndex > 25:
+                newIndex = newIndex - 26
+        elif iDirection == "decode":
+            newIndex = oldIndex - iShift
+        result_text += alphabet[newIndex]
+    
+    print(f"The {iDirection}d text is {result_text}")
 
-    print(f"The encoded text is {cipher_text}")
 
-def decrypt(input_text, shift_amount):
-    cipher_text = input_text
-    iShift = shift_amount
-    plain_text = ""
-
-    for letter in cipher_text:
-        oldIndex = alphabet.index(letter)
-        newIndex = oldIndex - iShift
-        newLetter = alphabet[newIndex]
-        plain_text += newLetter
-
-    print(f"The decoded text is {plain_text}")
-
-if direction == "encode":
-    encrypt(input_text=text, shift_amount=shift)
-elif direction == "decode":
-    decrypt(input_text=text, shift_amount=shift)
-else:
-    print("Wrong input")
+caesar(itext=text, ishift=shift, idirection=direction)
 
 #Decryption
 #TODO-1: Create a different function called 'decrypt' that takes the 'text' and 'shift' as inputs.
