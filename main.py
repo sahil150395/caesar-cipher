@@ -1,30 +1,45 @@
-alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+from art import logo
 
-direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
-text = input("Type your message:\n").lower()
-shift = int(input("Type the shift number:\n"))
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z','a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+print(logo)
 
 
 def caesar(itext, ishift, idirection):
     input_text = text
     iShift = ishift
+
     iDirection = idirection
-    result_text = ""
+    result_text = []
+    if iDirection == "decode":
+        iShift *= -1
 
     for letter in input_text:
-        oldIndex = alphabet.index(letter)
-        if iDirection == "encode":
+        if letter in alphabet:
+            oldIndex = alphabet.index(letter)
             newIndex = oldIndex + iShift
-            if newIndex > 25:
-                newIndex = newIndex - 26
-        elif iDirection == "decode":
-            newIndex = oldIndex - iShift
-        result_text += alphabet[newIndex]
+            result_text.append(alphabet[newIndex])
+        else:
+            result_text.append(letter)
     
-    print(f"The {iDirection}d text is {result_text}")
+    print(f"The {iDirection}d text is {''.join(result_text)}")
 
 
-caesar(itext=text, ishift=shift, idirection=direction)
+should_continue = True
+while should_continue:
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+    text = input("Type your message:\n").lower()
+    shift = int(input("Type the shift number:\n"))
+    shift = shift % 26
+    caesar(itext=text, ishift=shift, idirection=direction)
+
+    result = input("Type 'yes' if you want to continue. Otherwise type 'no'.\n").lower()
+
+    if result == "no":
+        should_continue = False
+        print("Goodbye!")
+    
+
 
 #Decryption
 #TODO-1: Create a different function called 'decrypt' that takes the 'text' and 'shift' as inputs.
